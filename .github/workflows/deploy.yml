@@ -42,6 +42,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Setup Surge
+        run: npm i -g surge
+
       - name: Setup GH Pages
         uses: actions/configure-pages@v4
 
@@ -50,6 +53,9 @@ jobs:
         with:
           # Upload dist folder
           path: './dist'
+
+      - name: Deploy to Surge
+        run: surge ./ ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
 
       - name: Deploy to GH Pages
         id: deployment
